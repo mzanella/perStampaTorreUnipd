@@ -4,12 +4,12 @@ set -e
 
 function outputFileName(){
   echo "digit output file name:"
-  read output
+  read -e output
 }
 
 function inputFileName(){
   echo "digit input file names:"
-  read inputs
+  read -e inputs
 }
 
 if [ -z "$1" ] || [ -z "$2" ]
