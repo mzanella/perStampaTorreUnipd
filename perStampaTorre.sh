@@ -45,13 +45,13 @@ read number
 if [ $number -eq 1 ]
   then
     pdftk $inputs cat output $output
-  elif [ $number -eq 2 ]
+  elif [ $number -eq 2 ]; then
     pdftk $inputs cat output $output
     temp="temp"$output
     pdfnup -o $temp $output
     rm $output
     pdftk A=$temp shuffle AoddEast AevenWest output $output
-  elif [ $number -eq 4 ]
+  elif [ $number -eq 4 ]; then
     temp="temp"$output
     pdftk $inputs cat output $temp
     temp2="temp"$temp
