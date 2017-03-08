@@ -98,7 +98,7 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 	    pdfnup -o $temp $output
 	    rm $output
 	    pdftk A=$temp shuffle AoddEast AevenWest output $output
-	    rm
+	    rm $temp
 	  elif [ $number -eq 4 ]; then
 	    # 3 slides per page
 	    temp="temp"$output
