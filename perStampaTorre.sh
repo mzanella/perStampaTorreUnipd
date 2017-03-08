@@ -29,12 +29,34 @@ usage: ./perStampaTorre.sh [-h] [<args>]
                 in this case during the script the name of output file is asked
              if no args are passed to the script the name of input and output files are asked during the script
 
-The number of slides per pages is asked during the script.
+The number of slides per pages is asked during the script. The possibilities are:
+1 -> means 1 slide per page
+
+2 -> means 2 slides per pages, with landscape orientation
+         |----------|----------|
+         |          |          |
+         |    S1    |    S2    |
+         |          |          |
+         |----------|----------|
+
+
+4 -> means 4 slides per pages, with landscape orientation
+         |----------|----------|
+         |    S1    |    S2    |
+         |----------|----------|
+         |    S3    |    S4    |
+         |----------|----------|
+
     "
 }
 
-function runScript(){
+# check if help is wanted or script is runned
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]
+  then
+    showHelp
+  else
 	#check if there is one or two arguments
+	echo $1
 	if [ -z "$1" ] || [ -z "$2" ]
 	  then
 	    #if there is no arguments
@@ -76,6 +98,7 @@ function runScript(){
 	    pdfnup -o $temp $output
 	    rm $output
 	    pdftk A=$temp shuffle AoddEast AevenWest output $output
+	    rm
 	  elif [ $number -eq 4 ]; then
 	    # 3 slides per page
 	    temp="temp"$output
@@ -89,14 +112,6 @@ function runScript(){
 	  	# if number different from 1,2 and 4 or a string is inserted
 	    echo "Number not supported yet"
 	fi
-}
-
-# check if help is wanted or script is runned
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]
-  then
-    showHelp
-  else
-    runScript
 fi
 
 
