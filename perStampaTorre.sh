@@ -28,6 +28,7 @@ usage: ./perStampaTorre.sh [-h] [<args>]
              2. inputFile1.pdf ... inputFileN.pdf 
                 in this case during the script the name of output file is asked
              if no args are passed to the script the name of input and output files are asked during the script
+	     CAUTION! input file name cannot contain spaces
 
 The number of slides per pages is asked during the script. The possibilities are:
 1 -> means 1 slide per page
@@ -111,6 +112,24 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 	  else
 	  	# if number different from 1,2 and 4 or a string is inserted
 	    echo "Number not supported yet"
+	fi
+
+	echo "Number of page for splitting (Default no, 0 = no):"
+	read number
+	if [ $number -eq 0 ] || [ -z "$number" ]
+	  then
+	  	echo "No split performed"
+	  else
+		counter=1
+		outputname=0
+		numberofpage=`pdftk $output dump_data | grep NumberOfPages | sed 's/[^0-9]*//'`
+	  	while [  $(($counter+$number-1)) -lt $numberofpage ]; do
+			progress=$(($counter+$number-1))
+     			pdftk $output cat $counter-$progress output "$outputname-$output"
+     			let counter=counter+number
+			let outputname=outputname+1 
+ 		done
+		pdftk $output cat $counter-$numberofpage output "$outputname-$output"
 	fi
 fi
 
