@@ -65,9 +65,10 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 	      then
 	        inputFileName
 		outputFileName
-	    else
-	    #there is only one argument -> assumed that output file name is missing
-		outputFileName
+	      else
+	        #there is only one argument -> assumed that output file name is missing
+		inputs=$1
+                outputFileName
 	    fi
 	  else
 	    inputs=""
@@ -90,7 +91,7 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 	read number
 	if [ $number -eq 1 ] || [ -z "$number" ]
 	  then
-	  	# 1 slide per page -> only concatenation is performed
+	    # 1 slide per page -> only concatenation is performed
 	    pdftk $inputs cat output $output
 	  elif [ $number -eq 2 ]; then
 	    # 2 slides per page
@@ -113,10 +114,10 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 	  	# if number different from 1,2 and 4 or a string is inserted
 	    echo "Number not supported yet"
 	fi
-
+	
 	echo "Number of page for splitting (Default no, 0 = no):"
 	read number
-	if [ $number -eq 0 ] || [ -z "$number" ]
+	if [ -z "$number" ] || [ $number -eq 0 ]
 	  then
 	  	echo "No split performed"
 	  else
